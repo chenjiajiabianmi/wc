@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.link.PageInfoMapper">
+	<select id="selectByCode" resultType="persistence.entity.PageInfo">
+		SELECT 
+			*
+		FROM pageInfo
+		<where>
+			<if test="uniqueId != null">
+				uniqueId = #{uniqueId}
+			</if>
+			
+		</where>
+	</select>
+	
+	<insert id="insert">
+		insert into pageInfo
+		(
+			uniqueId,
+			title,
+			createDate,
+			modifyDate,
+			url
+			
+		)
+		values
+		(
+			#{uniqueId},
+			#{title},
+			#{createDate},
+			#{modifyDate},
+			#{url}
+			
+		)
+	</insert>
+	
+	<insert id="insertWhetherDuplicate">
+		insert into pageInfo
+		(
+			uniqueId,
+			title,
+			createDate,
+			modifyDate,
+			url
+		)
+		values
+		(
+			#{uniqueId},
+			#{title},
+			#{createDate},
+			#{modifyDate},
+			#{url}
+			
+		)
+		on duplicate key update
+		modifyDate = #{modifyDate}
+	</insert>
+</mapper>
